@@ -1,6 +1,7 @@
 // for the sake of type safety and not string typed chaos
 export enum CronTypes {
-  logJob = "logJob"
+  logJob = "logJob",
+  logJob2 = "logJob2"
 }
 
 /**

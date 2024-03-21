@@ -1,5 +1,5 @@
 import cron from 'node-cron'
-import { logJob } from "./jobs";
+import { log2Job, logJob } from "./jobs";
 import { Router } from 'express';
 import { CronTypes } from './helpers';
 
@@ -12,6 +12,7 @@ export const cronRouter = Router();
 const jobs: Map<CronTypes, cron.ScheduledTask> = new Map();
 
 jobs.set(CronTypes.logJob, logJob)
+jobs.set(CronTypes.logJob2, log2Job)
 
 cronRouter.post('/start', async (req, _) => {
   console.log('cronId', req.body)

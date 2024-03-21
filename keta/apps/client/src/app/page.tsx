@@ -1,9 +1,10 @@
-import styles from './page.module.less';
+import { GET } from "./api/hello/route";
 
 export default function Index() {
+  GET({select: { id: true }})
   return (
-    <div className={styles.page}>
-
-    </div>
+   <div>
+    haha
+   </div>
   );
 }

@@ -28,24 +28,24 @@ export default defineConfig({
     command: 'pnpm exec nx start client',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
-    cwd: workspaceRoot,
+    cwd: workspaceRoot
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
-
+    
     // Uncomment for mobile browsers support
     /* {
       name: 'Mobile Chrome',

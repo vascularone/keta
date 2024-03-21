@@ -3,6 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
 
+
 // This plugin is needed until this PR is merged.
 // https://github.com/vercel/next.js/pull/23185
 const { withLess } = require('@nx/next/plugins/with-less');
@@ -25,3 +26,4 @@ const plugins = [
 ];
 
 module.exports = composePlugins(...plugins)(nextConfig);
+

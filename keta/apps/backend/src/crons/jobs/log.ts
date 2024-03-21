@@ -1,5 +1,5 @@
 import cron from 'node-cron'
-import { CronTypes, stopCron } from '../helpers'
+// import { CronTypes, stopCron } from '../helpers'
 
 /**
  * JOB NAME REASON
@@ -16,7 +16,12 @@ import { CronTypes, stopCron } from '../helpers'
  * otherwise stop them at will by a post request
  */
 
-export const logJob = cron.schedule('*/3 * * * * *', async ()=>{
+export const logJob = cron.schedule('*/5 * * * * *', async ()=>{
   console.log('croning :)')
-  await stopCron(CronTypes.logJob)
+  // await stopCron(CronTypes.logJob)
+}, {scheduled:false})
+
+export const log2Job = cron.schedule('*/3 * * * * *', async ()=>{
+  console.log('2 croning :) :)')
+  // await stopCron(CronTypes.logJob)
 }, {scheduled:false})
