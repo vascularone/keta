@@ -14,8 +14,17 @@
       "es2020",
       "dom"
     ],
+    "baseUrl": "./",
+    "paths": {
+      "@keta/token": [
+        "libs/token/src/index.ts"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ]
+    },
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
+    "skipDefaultLibCheck": true
   },
   "exclude": [
     "node_modules",

@@ -1,10 +1,20 @@
-import { GET } from "./api/hello/route";
+import { Test } from "./components/test/test";
+import { useGetUsersQuery, createUser } from "./api/users";
 
-export default function Index() {
-  GET({select: { id: true }})
+export default async function Index() {
+  const { data, error, loading } = await useGetUsersQuery({
+    select: {
+      id: true,
+      name: true
+    }
+  })
+
+  if(error) return <div>Error while fetching users</div>
   return (
    <div>
-    haha
+    {loading ? <div>loading</div> : <div>{data?.map((user) => <div key={user.id}>{user.id} / {user.name} / {user.surname} </div>)}</div>}
+    <Test />
    </div>
   );
 }
+

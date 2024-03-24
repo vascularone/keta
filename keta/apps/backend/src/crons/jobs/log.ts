@@ -3,10 +3,8 @@ import cron from 'node-cron'
 
 /**
  * JOB NAME REASON
- * log job function names are defined like the ones
- * in the helpers enum
- * for the sake of better readability
- * and not fucking up simple names :)
+ * log job function names are defined like the ones in the helpers enum
+ * for the sake of better readability and not fucking up simple names :)
  * (not a long term solution but no brain cells atm)
  */
 

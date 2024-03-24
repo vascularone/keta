@@ -8,12 +8,12 @@ datasource db {
 }
 
 model ares_master {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
 }
 
 model users {
-  id      Int    @id @default(autoincrement())
-  name    String @db.VarChar
-  surname String
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar
+  surname    String
 }
