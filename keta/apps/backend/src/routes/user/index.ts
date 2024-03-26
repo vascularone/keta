@@ -1,5 +1,5 @@
 import { envConfig, prisma } from '../../app';
-import { decode, verify } from 'jsonwebtoken'
+import { decode, sign, verify } from 'jsonwebtoken'
 import type { DecodedBodyParam, DecodedSelectParam, User } from '@shared/types'
 import { Router } from 'express';
 import CryptoJS from 'crypto-js';
@@ -28,48 +28,35 @@ const { select, where } = (decode(decryptedSelect) as DecodedSelectParam<User, '
   result.send({ data: users })
 });
 
-userRoutes.post('/user', async (request, result) => {
+userRoutes.get('/user', async (request, result) => {
   const bodyParam = request.headers['b-h'] as string
 
   const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
   verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
   const { body } = decode(decryptedBody) as DecodedBodyParam<User>
 
-  await prisma.users.update({
+  const user = await prisma.users.update({
     where: {
-      id: 1
+      id: body?.id
     },
     data: {
-      name: 'CHANGED'
+      name: body?.name
     }
   })
+  result.send({ data: user })
 })
 
 userRoutes.post('/register', async (request, result) => {
-  const selectParam = request.headers.s_p_b as string
   const bodyParam = request.headers['b-h'] as string
 
   const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
   verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
   const { body } = decode(decryptedBody) as DecodedBodyParam<User>
-  // if(!selectParam) {
-  //   result.send({ data: null, error: 'No select params were provided'})
-  //   return
-  // }
-  // const { select, where } = (decode(selectParam) as DecodedSelectParam<User, 'users'>)
-
-  // if(!select) {
-  //   result.send({ data: null, error: 'No select params were provided'})
-  //   return
-  // }
   const users = await prisma.users.create({
-    //@ts-expect-error FIXME: Type 'SelectParam<User>' is not assignable to type 'usersSelect<DefaultArgs>'.
-    // select,
-    // where,
     data: {
       name: body?.name ?? '',
       surname: body?.surname ?? ''
     }
   })
-  result.send({ data: users })
+  result.send({ data: CryptoJS.AES.encrypt(sign(users, envConfig.SECRET_JWT_KEY, { algorithm: "HS256"}), envConfig.SECRET_JWT_KEY).toString() })
 });

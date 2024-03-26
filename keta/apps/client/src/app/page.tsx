@@ -1,5 +1,5 @@
 import { Test } from "./components/test/test";
-import { useGetUsersQuery, createUser } from "./api/users";
+import { useGetUsersQuery } from "./requests/users";
 
 export default async function Index() {
   const { data, error, loading } = await useGetUsersQuery({

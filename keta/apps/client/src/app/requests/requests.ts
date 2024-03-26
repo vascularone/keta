@@ -1,6 +1,7 @@
-import type { BodyParam, FetchProperties, FetchState, Models, PostProperties } from "@shared/types";
-import { generateAuthJWT, generateBodyJWT, generateHeaderJWT } from "./encryption";
-import { tokenStore } from './token';
+'use server'
+import type { FetchProperties, FetchState, Models, PostProperties } from "@shared/types";
+import { envConfig, generateAuthJWT, generateBodyJWT, generateHeaderJWT } from "./encryption";
+import { cookies } from 'next/headers'
 
 export const FETCH = async <T, TModel, KModel extends Models>(endpoint: string, variables: FetchProperties<TModel, KModel>): Promise<FetchState<T>> => {
   const initialState: FetchState<T> = {
@@ -8,19 +9,19 @@ export const FETCH = async <T, TModel, KModel extends Models>(endpoint: string, 
     loading: true,
     error: null,
   };
-  const { token } = tokenStore.getState()
+  const token = cookies().get('authorization')?.value
   try {
     const options = {
       method: "GET",
       headers: {
         Accept: "application/json",
-        s_p_b: generateHeaderJWT<TModel, KModel>(variables),
+        s_p_b: await generateHeaderJWT<TModel, KModel>(variables),
         ...(token && {
-          'Authorization': `Bearer: ${generateAuthJWT(token)}`
+          'Authorization': `Bearer: ${await generateAuthJWT(token)}`
         })
       },
     };
-    const response = await fetch(`${process.env.BACKEND_API_URL}/${endpoint}`, options).then((data) => data.json())
+    const response = await fetch(`${envConfig.BACKEND_API_URL}/${endpoint}`, options).then((data) => data.json())
 
     return { data: response.data, loading: false, error: null };
   } catch (error) {
@@ -30,22 +31,24 @@ export const FETCH = async <T, TModel, KModel extends Models>(endpoint: string, 
 }
 
 export const POST = async <T>(endpoint: string, body?: PostProperties<T>) => {
-  const { token } = tokenStore.getState()
+  const token = cookies().get('authorization')?.value
+
     try {
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           ...(token && {
-            'Authorization': generateAuthJWT(token)
+            'Authorization': await generateAuthJWT(token)
           }),
           ...(body && {
-            'b-h': generateBodyJWT<T>(body)
+            'b-h': await generateBodyJWT<T>(body)
           })
           // s_p_b: generateHeaderJWT(variables)
         },
       };
-      await fetch(`${process.env.BACKEND_API_URL}/${endpoint}`, options)
+      const response = await fetch(`${envConfig.BACKEND_API_URL}/${endpoint}`, options).then((data) => data.json())
+      return { data: response.data }
     } catch (error) {
       console.error("Error:", error);
     }

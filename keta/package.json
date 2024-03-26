@@ -19,16 +19,15 @@
     "env-cmd": "^10.1.0",
     "esbuild-node-externals": "^1.13.0",
     "express": "~4.18.1",
+    "jose": "^5.2.3",
     "jsonwebtoken": "^9.0.2",
-    "newrelic": "^11.14.0",
     "next": "14.0.4",
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tslib": "^2.3.0",
-    "zod": "^3.22.4",
-    "zustand": "^4.5.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
@@ -70,6 +69,7 @@
     "autoprefixer": "^10.4.16",
     "babel-jest": "^29.4.1",
     "bits-ui": "^0.19.7",
+    "cookies-next": "^4.1.1",
     "cors": "^2.8.5",
     "esbuild": "^0.19.12",
     "eslint": "~8.48.0",

@@ -1,3 +1,4 @@
+'use server'
 import type { FetchProperties, PostProperties, User } from '@shared/types'
 import { FETCH, POST } from '../requests';
 
