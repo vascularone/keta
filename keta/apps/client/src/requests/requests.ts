@@ -1,6 +1,6 @@
 'use server'
 import type { FetchProperties, FetchState, Models, PostProperties } from "@shared/types";
-import { envConfig, generateAuthJWT, generateBodyJWT, generateHeaderJWT } from "./encryption";
+import { envConfig, generateAuthJWT, generateBodyJWT, generateHeaderJWT } from "./crypto";
 import { cookies } from 'next/headers'
 
 export const FETCH = async <T, TModel, KModel extends Models>(endpoint: string, variables: FetchProperties<TModel, KModel>): Promise<FetchState<T>> => {

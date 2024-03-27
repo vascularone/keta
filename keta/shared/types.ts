@@ -25,7 +25,7 @@ type IsRelationship<T, K extends keyof T> = T[K] extends object ? (keyof T[K] ex
 export type SelectParam<T> = {
   [K in keyof Partial<T>]: IsRelationship<T, K> extends true
     ? { select: SelectParam<T[K]> }
-    : boolean | SelectParam<T[K]>;
+    : boolean
 };
 
 export type BodyParam<T> = {
