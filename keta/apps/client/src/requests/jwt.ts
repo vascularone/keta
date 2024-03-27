@@ -9,7 +9,7 @@ export const signJWT = async (params: JWTPayload, secretKey: string) => {
 
 export const verifyJWT = async (jwtPayload: string) => {
   try {
-    //@ts-expect-error must be Uint8array or KeyLike
+    //@ts-expect-error FIXME: must be Uint8array or KeyLike
     const payload =  (await jwtVerify(jwtPayload, envConfig.SECRET_JWT_KEY)).payload
     return { data: payload }
   } catch(error) {

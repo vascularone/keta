@@ -3,6 +3,7 @@ import { decode, sign, verify } from 'jsonwebtoken'
 import type { DecodedBodyParam, DecodedSelectParam, User } from '@shared/types'
 import { Router } from 'express';
 import CryptoJS from 'crypto-js';
+
 export const userRoutes = Router()
 
 userRoutes.get('/users', async (request, result) => {
@@ -21,7 +22,6 @@ const { select, where } = (decode(decryptedSelect) as DecodedSelectParam<User, '
     return
   }
   const users = await prisma.users.findMany({
-    //@ts-expect-error FIXME: Type 'SelectParam<User>' is not assignable to type 'usersSelect<DefaultArgs>'.
     select,
     where
   })

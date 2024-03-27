@@ -11,7 +11,7 @@ const permissionsMap = new Map<string, string>([
 
 export const globalAuth = (req: Request, res: Response, next: NextFunction) => {
   const path = req.path;
-  const auth = CryptoJS.AES.decrypt(req.headers.authorization?.split(' ')[1] ?? '', process.env.SECRET_JWT_KEY).toString(CryptoJS.enc.Utf8);
+  const auth = CryptoJS.AES.decrypt(req.headers.authorization?.split(' ')[1] ?? '', envConfig.SECRET_JWT_KEY).toString(CryptoJS.enc.Utf8);
 
   const requiredPermissions = permissionsMap.get(path);
 

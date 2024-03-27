@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { router } from './routes/router';
 import { cronRouter } from './crons';
 import { z } from 'zod'
 import { PrismaClient } from '@prisma/client';
