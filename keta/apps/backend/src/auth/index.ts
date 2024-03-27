@@ -6,7 +6,9 @@ import CryptoJS from 'crypto-js'
 const permissionsMap = new Map<string, string>([
   ['/api/users', 'authed'],
   ['/api/register', 'public'],
-  ['/api/login', 'public']
+  ['/api/login', 'public'],
+  ['/api/ares_master', 'public'],
+  ['/api/createAres', 'public']
 ]);
 
 export const globalAuth = (req: Request, res: Response, next: NextFunction) => {

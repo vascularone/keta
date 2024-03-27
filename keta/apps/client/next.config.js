@@ -17,6 +17,11 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  logging: {
+    fetches: {
+      fullUrl: true
+    }
+  }
 };
 
 const plugins = [

@@ -7,6 +7,11 @@ export type User = {
   surname: string
 }
 
+export type Ares_Master = {
+  id: number
+  name: string
+}
+
 export interface FetchState<T> {
   data?: T;
   loading: boolean;

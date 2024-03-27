@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { PrismaClient } from '@prisma/client';
 import { globalAuth } from './auth';
 import { userRoutes } from './routes/user';
+import { aresRoutes } from './routes/ares_master';
 export const prisma = new PrismaClient()
 
 const envSchema = z.object({
@@ -41,6 +42,7 @@ export const createapp = async () => {
 
   app.use('/api', userRoutes);
   app.use('/cron', cronRouter);
+  app.use('/api', aresRoutes)
 
   return app;
 };

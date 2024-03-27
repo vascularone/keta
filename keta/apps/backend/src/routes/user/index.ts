@@ -60,3 +60,23 @@ userRoutes.post('/register', async (request, result) => {
   })
   result.send({ data: CryptoJS.AES.encrypt(sign(users, envConfig.SECRET_JWT_KEY, { algorithm: "HS256"}), envConfig.SECRET_JWT_KEY).toString() })
 });
+
+userRoutes.post('/login', async (request, result) => {
+  const bodyParam = request.headers['b-h'] as string
+
+  const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
+  verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
+  const { body } = decode(decryptedBody) as DecodedBodyParam<User>
+  const entry = await prisma.users.findFirstOrThrow({
+    where: {
+      name: body?.name
+    },
+    select: {
+      id: true,
+      name: true
+    }
+  })
+
+  result.send({ data: CryptoJS.AES.encrypt(sign(entry, envConfig.SECRET_JWT_KEY, { algorithm: "HS256"}), envConfig.SECRET_JWT_KEY).toString() })
+
+})
