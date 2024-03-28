@@ -1,4 +1,4 @@
-import { JWTPayload, SignJWT, jwtVerify } from "jose";
+import { JWTPayload, SignJWT, jwtVerify} from "jose";
 import { envConfig } from "./crypto";
 export const signJWT = async (params: JWTPayload, secretKey: string) => {
   return await new SignJWT(params)

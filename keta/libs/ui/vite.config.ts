@@ -5,7 +5,6 @@
 import dts from 'vite-plugin-dts';
 import * as path from 'path';
       import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-      import svgr from "vite-plugin-svgr";
 
       export default defineConfig({
         root: __dirname,
@@ -14,7 +13,6 @@ import * as path from 'path';
 
 
         plugins: [react(),
-          svgr({include: '**/**/**/*.svg'}),
 nxViteTsPaths(),
 dts({ entryRoot: 'src', tsConfigFilePath: path.join(__dirname, 'tsconfig.lib.json'), skipDiagnostics: true })],
 

@@ -1,5 +1,5 @@
 import { envConfig, prisma } from '../../app';
-import { decode, sign, verify } from 'jsonwebtoken'
+import { decode, JwtPayload, sign, verify } from 'jsonwebtoken'
 import type { DecodedBodyParam, DecodedSelectParam, User } from '@shared/types'
 import { Router } from 'express';
 import CryptoJS from 'crypto-js';
@@ -8,22 +8,25 @@ export const userRoutes = Router()
 
 userRoutes.get('/users', async (request, result) => {
   const selectParam = request.headers.s_p_b as string
-
+  const authorization = request.headers.authorization?.split(' ')[1] ?? '' as string
   if(!selectParam) {
     result.send({ data: null, error: 'No select params were provided'})
     return
   }
   const decryptedSelect = CryptoJS.AES.decrypt(selectParam, envConfig.SERVER_HEADER_SELECT).toString(CryptoJS.enc.Utf8)
+  const decryptedAuth = CryptoJS.AES.decrypt(authorization, envConfig.SECRET_JWT_KEY).toString(CryptoJS.enc.Utf8)
   verify(decryptedSelect, envConfig.SERVER_HEADER_SELECT)
 const { select, where } = (decode(decryptedSelect) as DecodedSelectParam<User, 'users'>)
+const payload = decode(decryptedAuth) as JwtPayload
 
+console.log('payload', payload.id)
   if(!select) {
     result.send({ data: null, error: 'No select params were provided'})
     return
   }
   const users = await prisma.users.findMany({
     select,
-    where
+    where: {...where, id: payload.id}
   })
   result.send({ data: users })
 });

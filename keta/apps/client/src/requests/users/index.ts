@@ -5,7 +5,9 @@ import { revalidateTag, unstable_cache } from 'next/cache';
 
 export const useGetUsersQuery = unstable_cache(
   async (variables: FetchProperties<User, 'users'>) => {
-    return await FETCH<User[], User, 'users'>('users', variables)
+    const data =  await FETCH<User[], User, 'users'>('users', variables)
+    revalidateTag('users') //DO I ACTUALLY NEED TO REVALIDATE HERE? I DONT KNOW
+    return data
   },
   ['users'],
   {
