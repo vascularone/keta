@@ -92,22 +92,22 @@
   "generators": {
     "@nx/next": {
       "application": {
-        "style": "less",
+        "style": "scss",
         "linter": "eslint"
       }
     },
     "@nx/react": {
       "application": {
         "babel": true,
-        "style": "less",
+        "style": "scss",
         "linter": "eslint",
         "bundler": "vite"
       },
       "component": {
-        "style": "less"
+        "style": "scss"
       },
       "library": {
-        "style": "less",
+        "style": "scss",
         "linter": "eslint",
         "unitTestRunner": "none"
       }

@@ -16,4 +16,5 @@ model users {
   id         Int         @id @default(autoincrement())
   name       String      @db.VarChar
   surname    String
+  password   String
 }

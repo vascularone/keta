@@ -1,13 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module '*.svg' {
-  const content: any;
-  export const ReactComponent: any;
-  export default content;
+  import * as React from 'react'
+
+  export const ReactComponent: React.FunctionComponent<
+    React.ComponentProps<'svg'> & { title?: string }
+  >
+  export default ReactComponent
 }
-
-
-declare module '*.module.less' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-

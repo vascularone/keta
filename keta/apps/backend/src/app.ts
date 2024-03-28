@@ -11,7 +11,8 @@ export const prisma = new PrismaClient()
 const envSchema = z.object({
   SERVER_HEADER_SELECT: z.string(),
   SECRET_JWT_KEY: z.string(),
-  SECRET_BODY_SELECT: z.string()
+  SECRET_BODY_SELECT: z.string(),
+  SECRET_ENCRYPTION_KEY: z.string()
 });
 
 export const envConfig = envSchema.parse(process.env);

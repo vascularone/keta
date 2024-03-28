@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import { Header } from '../../components/header/header';
 dotenv.config()
 export const metadata = {
   title: 'Keta',
@@ -13,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <Header />
        {children}
       </body>
     </html>

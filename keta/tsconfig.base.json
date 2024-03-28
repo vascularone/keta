@@ -19,6 +19,9 @@
       "@keta/token": [
         "libs/token/src/index.ts"
       ],
+      "@keta/ui": [
+        "libs/ui/src/index.ts"
+      ],
       "@shared/*": [
         "shared/*"
       ]

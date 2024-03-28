@@ -5,6 +5,7 @@ export type User = {
   id: number
   name: string
   surname: string
+  password: string
 }
 
 export type Ares_Master = {

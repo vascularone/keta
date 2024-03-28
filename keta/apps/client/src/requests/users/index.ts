@@ -18,3 +18,7 @@ export const createUser = async (variables: PostProperties<User>) => {
   revalidateTag('users')
   return data
 }
+
+export const login = async (variables: PostProperties<User>) => {
+  return await POST<User>('login', variables)
+}
