@@ -1,6 +1,6 @@
-import { Test } from "../../components/test/test"
+import { Login } from "../../components/login/login";
 
 export default async function Index() {
-  return <div><Test /></div>
+  return <Login />
 }
 
