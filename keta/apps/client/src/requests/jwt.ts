@@ -1,5 +1,6 @@
+'use server'
 import { JWTPayload, SignJWT, jwtVerify} from "jose";
-import { envConfig } from "./crypto";
+import { envConfig } from "./envConfig";
 export const signJWT = async (params: JWTPayload, secretKey: string) => {
   return await new SignJWT(params)
       .setProtectedHeader({ alg: 'HS512' })

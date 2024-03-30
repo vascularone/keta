@@ -1,16 +1,8 @@
+'use server'
 import type { DecodedSelectParam, Models, PostProperties } from '@shared/types';
-import { z } from 'zod';
 import CryptoJS from 'crypto-js'
 import { signJWT } from './jwt';
-const envSchema = z.object({
-  SERVER_HEADER_SELECT: z.string({required_error: 'you did not input header select?'}),
-  BACKEND_API_URL: z.string(),
-  SECRET_JWT_KEY: z.string(),
-  SECRET_BODY_SELECT: z.string()
-});
-
-export const envConfig = envSchema.parse(process.env);
-
+import { envConfig } from './envConfig';
 
 
 export const generateHeaderJWT = async <TModel, KModel extends Models>(variables: DecodedSelectParam<TModel,KModel>) => {

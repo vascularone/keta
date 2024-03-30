@@ -4,21 +4,16 @@ import { useRouter } from 'next/navigation'
 import { login } from '../../requests/users'
 import { setCookie } from 'cookies-next'
 import { useTransition } from 'react'
-import { Loading } from '../images/loading'
 import styles from './login.module.scss'
+import { Loading } from '../../ui/loading/loading'
 
 export const Login = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter()
-  const loginHandler = async (formData: FormData) => {
+  const loginHandler = async () => {
     startTransition(async () => {
       try {
-        const rawData= {
-          name: formData.get('name'),
-          password: formData.get('password')
-        }
-        console.log('formData', formData)
-        const response = await login({ body: { name: rawData.name, surname: "Kastrati", password: rawData.password}})
+        const response = await login({ body: { name: 'Rinor', surname: "Kastrati", password: 'Unbrokenmaan2_'}})
         if(response === 'Error')
            {
             console.log('NOT LA RIGHT PASSOWRD MATE')
@@ -34,7 +29,7 @@ export const Login = () => {
   }
   if(isPending) return <div className={styles.loader}><Loading /></div>
   return <form action={loginHandler} className={styles.formWrapper}>
-    <Image src="/keta-layer-black.svg" width={150} height={150} alt='no keta'/>
+    <Image src="/keta-shadow-layer-black.svg" width={150} height={150} alt='no keta'/>
     <input type="text" name="username" />
     <input type="password" name="passowrd" />
     <button type='submit'>login</button>

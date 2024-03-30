@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { Loading } from "@keta/ui";
 import { useGetUsersQuery } from "../requests/users";
 import { getAresMasterQuery } from "../requests/ares_master";
+import { Loading } from "../ui/loading/loading";
 export default async function Index() {
 
   const { data } = await useGetUsersQuery({select: {
