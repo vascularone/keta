@@ -60,7 +60,10 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
+      },
+      "exclude": [
+        "apps/retral-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/next/plugin",
@@ -85,6 +88,14 @@
         "testTargetName": "test",
         "serveTargetName": "serve",
         "serveStaticTargetName": "serve-static"
+      }
+    },
+    {
+      "plugin": "@nx/webpack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview"
       }
     }
   ],

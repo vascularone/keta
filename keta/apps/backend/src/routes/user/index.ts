@@ -13,13 +13,11 @@ userRoutes.get('/users', async (request, result) => {
     result.send({ data: null, error: 'No select params were provided'})
     return
   }
-  const decryptedSelect = CryptoJS.AES.decrypt(selectParam, envConfig.SERVER_HEADER_SELECT).toString(CryptoJS.enc.Utf8)
   const decryptedAuth = CryptoJS.AES.decrypt(authorization, envConfig.SECRET_JWT_KEY).toString(CryptoJS.enc.Utf8)
-  verify(decryptedSelect, envConfig.SERVER_HEADER_SELECT)
-const { select, where } = (decode(decryptedSelect) as DecodedSelectParam<User, 'users'>)
+  verify(selectParam, envConfig.SERVER_HEADER_SELECT)
+const { select, where } = (decode(selectParam) as DecodedSelectParam<User, 'users'>)
 const payload = decode(decryptedAuth) as JwtPayload
 
-console.log('payload', payload.id)
   if(!select) {
     result.send({ data: null, error: 'No select params were provided'})
     return
@@ -34,9 +32,8 @@ console.log('payload', payload.id)
 userRoutes.get('/user', async (request, result) => {
   const bodyParam = request.headers['b-h'] as string
 
-  const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
-  verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
-  const { body } = decode(decryptedBody) as DecodedBodyParam<User>
+  verify(bodyParam, envConfig.SECRET_BODY_SELECT)
+  const { body } = decode(bodyParam) as DecodedBodyParam<User>
 
   const user = await prisma.users.update({
     where: {
@@ -52,9 +49,8 @@ userRoutes.get('/user', async (request, result) => {
 userRoutes.post('/register', async (request, result) => {
   const bodyParam = request.headers['b-h'] as string
 
-  const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
-  verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
-  const { body } = decode(decryptedBody) as DecodedBodyParam<User>
+  verify(bodyParam, envConfig.SECRET_BODY_SELECT)
+  const { body } = decode(bodyParam) as DecodedBodyParam<User>
   if(!body?.name || !body.password) return
   const users = await prisma.users.create({
     data: {
@@ -69,10 +65,9 @@ userRoutes.post('/register', async (request, result) => {
 userRoutes.post('/login', async (request, result) => {
   const bodyParam = request.headers['b-h'] as string
 
-  const decryptedBody = CryptoJS.AES.decrypt(bodyParam, envConfig.SECRET_BODY_SELECT).toString(CryptoJS.enc.Utf8)
-  verify(decryptedBody, envConfig.SECRET_BODY_SELECT)
-  const { body } = decode(decryptedBody) as DecodedBodyParam<User>
-  const entry = await prisma.users.findFirstOrThrow({
+  verify(bodyParam, envConfig.SECRET_BODY_SELECT)
+  const { body } = decode(bodyParam) as DecodedBodyParam<User>
+  const entry = await prisma.users.findFirst({
     where: {
       name: body?.name,
     },
@@ -82,9 +77,14 @@ userRoutes.post('/login', async (request, result) => {
       password: true
     }
   })
+
+  if(!entry) {
+    result.send({ data: "No user found", errorCode: 300 })
+    return
+  }
   const passwordMatch = CryptoJS.AES.decrypt(entry.password, envConfig.SECRET_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) === body?.password
   if(!passwordMatch) {
-    result.send({ data: "Error" })
+    result.send({ data: "Password does not match", errorCode: 300 })
     return
   }
   result.send({ data: CryptoJS.AES.encrypt(sign(entry, envConfig.SECRET_JWT_KEY, { algorithm: "HS256"}), envConfig.SECRET_JWT_KEY).toString() })

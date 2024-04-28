@@ -5,10 +5,16 @@
   "scripts": {
     "ready-backend": "cross-env NODE_OPTIONS=\"--max-old-space-size=16374\" node build.cjs && pnpm env-cmd -f apps/backend/.env node dist/build/main.cjs",
     "keta:backend": "nodemon --watch apps/backend -e ts --exec \"pnpm ready-backend\"",
-    "keta:client": "pnpm nx run client:dev"
+    "keta:client": "pnpm nx run client:dev",
+    "ready-retral": "cross-env NODE_OPTIONS=\"--max-old-space-size=16374\" node retral.cjs && pnpm env-cmd -f apps/retral/.env node dist/retral/main.cjs",
+    "keta:retral": "nodemon --watch apps/retral -e ts --exec \"pnpm ready-retral\""
   },
   "private": true,
   "dependencies": {
+    "@nestjs/common": "^10.0.2",
+    "@nestjs/core": "^10.0.2",
+    "@nestjs/platform-express": "^10.0.2",
+    "@nx/nest": "^18.3.4",
     "@nx/playwright": "^18.1.2",
     "@prisma/client": "^5.11.0",
     "body-parser": "^1.20.2",
@@ -26,24 +32,29 @@
     "nodemon": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@nestjs/schematics": "^10.0.1",
+    "@nestjs/testing": "^10.0.2",
     "@nx/cypress": "18.1.2",
     "@nx/devkit": "18.1.2",
     "@nx/esbuild": "18.1.1",
     "@nx/eslint": "18.1.1",
     "@nx/eslint-plugin": "18.1.1",
-    "@nx/jest": "18.1.1",
-    "@nx/js": "18.1.2",
+    "@nx/jest": "18.3.4",
+    "@nx/js": "18.3.4",
     "@nx/next": "18.1.2",
-    "@nx/node": "18.1.1",
+    "@nx/node": "18.3.4",
     "@nx/react": "18.1.2",
     "@nx/vite": "18.1.1",
-    "@nx/web": "18.1.1",
+    "@nx/web": "18.1.2",
+    "@nx/webpack": "18.3.4",
     "@nx/workspace": "18.1.1",
     "@playwright/test": "^1.36.0",
     "@swc-node/register": "~1.8.0",
@@ -85,7 +96,6 @@
     "jsdom": "~22.1.0",
     "nx": "18.1.1",
     "prettier": "^2.6.2",
-    "prettier-plugin-tailwindcss": "^0.5.9",
     "prisma": "5.7.1",
     "sass": "1.62.1",
     "ts-jest": "^29.1.0",
@@ -93,6 +103,7 @@
     "typescript": "~5.3.2",
     "vite": "^5.1.6",
     "vite-plugin-dts": "~2.3.0",
-    "vitest": "^1.4.0"
+    "vitest": "^1.4.0",
+    "webpack-cli": "^5.1.4"
   }
 }

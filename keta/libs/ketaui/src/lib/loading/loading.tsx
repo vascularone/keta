@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './loading.module.scss'
 import Image from 'next/image'
 

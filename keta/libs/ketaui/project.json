@@ -1,0 +1,9 @@
+{
+  "name": "ketaui",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "ketaui/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ketaui --web",
+  "targets": {}
+}

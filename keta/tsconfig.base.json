@@ -16,14 +16,11 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@keta/token": [
-        "libs/token/src/index.ts"
-      ],
       "@keta/ui": [
-        "libs/ui/src/index.ts"
+        "libs/ketaui/src/index.ts"
       ],
       "@shared/*": [
-        "shared/*"
+        "libs/shared/*"
       ]
     },
     "skipLibCheck": true,

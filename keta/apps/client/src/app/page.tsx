@@ -1,7 +1,8 @@
-import { Suspense } from "react";
-import { useGetUsersQuery } from "../requests/users";
-import { getAresMasterQuery } from "../requests/ares_master";
-import { Loading } from "../ui/loading/loading";
+import { Suspense } from "react"
+import { useGetUsersQuery } from "../requests/users"
+import { getAresMasterQuery } from "../requests/ares_master"
+import { Loading, Button } from "@keta/ui"
+
 export default async function Index() {
 
   const { data } = await useGetUsersQuery({select: {
@@ -13,6 +14,7 @@ export default async function Index() {
 
   return (
    <Suspense fallback={<Loading />}>
+    <Button><span>Hello</span></Button>
     ------------------------------------------
     <div>
     {data?.map((user) => {

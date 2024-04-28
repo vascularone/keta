@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { decryptAuthHash } from './requests/crypto'
 
 export const config = {
   matcher: [
@@ -17,24 +16,24 @@ export const config = {
       },
      */
     //the images/icons matcher is temporary, I don't have a solution rn
-    '/((?!login|register|_next|favicon|.*\\.svg$|.*\\.png$|.*\\.ico$).*)',
+    '/((?!_next|favicon|.*\\.svg$|.*\\.png$|.*\\.ico$).*)',
   ],
 }
 
 export async function middleware(request: NextRequest) {
   const cookieJwt = request.cookies.get('authorization')?.value
 
+  if(request.nextUrl.pathname.includes('login') || request.nextUrl.pathname.includes('register')) {
+    if(cookieJwt) return NextResponse.redirect(new URL('/', request.url), {
+      status: 303,
+    })
+    return NextResponse.next()
+  }
   if(!cookieJwt) return NextResponse.redirect(new URL('/login', request.url), {
     status: 303,
   })
-  const decrypredJWT = decryptAuthHash(cookieJwt)
 
-  if(!decrypredJWT) return NextResponse.redirect(new URL('/login', request.url), {
-    status: 303,
-  })
-
-  const response = NextResponse.next()
-  return response
+  return NextResponse.next()
 }
 
 /**

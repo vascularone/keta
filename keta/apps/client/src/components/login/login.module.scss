@@ -7,10 +7,45 @@
 }
 
 .formWrapper {
-  width: 100%;
+  width: 20%;
   height: 100%;
   justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
+  .formInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+  }
+  .logoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .keta {
+      color: black;
+      font-size: 6em;
+      font-family: 'Inter', sans-serif;
+      -webkit-text-stroke-width: 2px;
+      font-weight: bolder;
+      -webkit-text-stroke-color: #CA4141;
+    }
+  }
+}
+
+.logo {
+  animation: rotation 1s;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+
 }

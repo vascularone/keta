@@ -1,0 +1,24 @@
+{
+  "name": "retral",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/retral/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "retral:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "retral:build:development"
+        },
+        "production": {
+          "buildTarget": "retral:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}

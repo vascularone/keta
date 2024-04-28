@@ -47,7 +47,7 @@ export const POST = async <T>(endpoint: string, body?: PostProperties<T>) => {
         },
       };
       const response = await fetch(`${envConfig.BACKEND_API_URL}/${endpoint}`, options).then((data) => data.json())
-      return response.data
+      return response
     } catch (error) {
       console.error("Error:", error);
     }
